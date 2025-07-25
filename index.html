@@ -3,18 +3,40 @@
 <head>
   <meta charset="UTF-8">
   <title>ค้นหาข้อมูล</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      max-width: 500px;
+      margin: auto;
+    }
+    input, button {
+      padding: 10px;
+      width: 100%;
+      margin-top: 10px;
+    }
+    #result {
+      margin-top: 20px;
+      background: #f9f9f9;
+      padding: 10px;
+      border: 1px solid #ddd;
+    }
+  </style>
   <script>
     async function search() {
       const id = document.getElementById('id13').value.trim();
       const result = document.getElementById('result');
       result.innerHTML = '';
+
       if (!/^\d{13}$/.test(id)) {
         result.innerText = 'กรุณากรอกเลขบัตร 13 หลักให้ถูกต้อง';
         return;
       }
+
       const url = 'https://api.sheetbest.com/sheets/fecb428b-449f-4c55-bd02-63692ef9289b';
       const data = await fetch(url).then(res => res.json());
       const person = data.find(row => row["ID NO."] === id);
+
       if (person) {
         const fullName = `${person["FIRST NAME"]} ${person["LAST NAME"]}`;
         const account = person["ACCOUNT NO."];
@@ -33,6 +55,6 @@
   <h2>ค้นหาข้อมูลด้วยเลขบัตรประชาชน</h2>
   <input type="text" id="id13" placeholder="เลขบัตร 13 หลัก" maxlength="13" />
   <button onclick="search()">ค้นหา</button>
-  <div id="result" style="margin-top: 1em;"></div>
+  <div id="result"></div>
 </body>
 </html>
