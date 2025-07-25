@@ -1,60 +1,38 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="th">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2113.65">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
-    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Thonburi}
-    span.s1 {font: 12.0px Thonburi}
-    span.s2 {font: 12.0px Helvetica}
-  </style>
+  <meta charset="UTF-8">
+  <title>ค้นหาข้อมูล</title>
+  <script>
+    async function search() {
+      const id = document.getElementById('id13').value.trim();
+      const result = document.getElementById('result');
+      result.innerHTML = '';
+      if (!/^\d{13}$/.test(id)) {
+        result.innerText = 'กรุณากรอกเลขบัตร 13 หลักให้ถูกต้อง';
+        return;
+      }
+      const url = 'https://api.sheetbest.com/sheets/fecb428b-449f-4c55-bd02-63692ef9289b';
+      const data = await fetch(url).then(res => res.json());
+      const person = data.find(row => row["ID NO."] === id);
+      if (person) {
+        const fullName = `${person["FIRST NAME"]} ${person["LAST NAME"]}`;
+        const account = person["ACCOUNT NO."];
+        result.innerHTML = `
+          <p><strong>ลำดับ:</strong> ${person["No."]}</p>
+          <p><strong>ชื่อ:</strong> ${fullName}</p>
+          <p><strong>เลขบัญชี:</strong> XXXX-X-${account.slice(-4)}</p>
+        `;
+      } else {
+        result.innerText = 'ไม่พบข้อมูลในระบบ';
+      }
+    }
+  </script>
 </head>
 <body>
-<p class="p1">&lt;!DOCTYPE html&gt;</p>
-<p class="p1">&lt;html lang="th"&gt;</p>
-<p class="p1">&lt;head&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta charset="UTF-8"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;title&gt;<span class="s1">ค้นหาข้อมูล</span>&lt;/title&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;script&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>async function search() {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const id = document.getElementById('id13').value.trim();</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const result = document.getElementById('result');</p>
-<p class="p1"><span class="Apple-converted-space">      </span>result.innerHTML = '';</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (!/^\d{13}$/.test(id)) {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>result.innerText = '<span class="s1">กรุณากรอกเลขบัตร</span> 13 <span class="s1">หลักให้ถูกต้อง</span>';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>return;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>const url = 'https://api.sheetbest.com/sheets/fecb428b-449f-4c55-bd02-63692ef9289b';</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const data = await fetch(url).then(res =&gt; res.json());</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const person = data.find(row =&gt; row["ID NO."] === id);</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (person) {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const fullName = `${person["FIRST NAME"]} ${person["LAST NAME"]}`;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const account = person["ACCOUNT NO."];</p>
-<p class="p1"><span class="Apple-converted-space">        </span>result.innerHTML = `</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;p&gt;&lt;strong&gt;<span class="s1">ลำดับ</span>:&lt;/strong&gt; ${person["No."]}&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;p&gt;&lt;strong&gt;<span class="s1">ชื่อ</span>:&lt;/strong&gt; ${fullName}&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;p&gt;&lt;strong&gt;<span class="s1">เลขบัญชี</span>:&lt;/strong&gt; XXXX-X-${account.slice(-4)}&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>`;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>} else {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>result.innerText = '<span class="s1">ไม่พบข้อมูลในระบบ</span>';</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/script&gt;</p>
-<p class="p1">&lt;/head&gt;</p>
-<p class="p1">&lt;body&gt;</p>
-<p class="p3"><span class="s2"><span class="Apple-converted-space">  </span>&lt;h2&gt;</span>ค้นหาข้อมูลด้วยเลขบัตรประชาชน<span class="s2">&lt;/h2&gt;</span></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;input type="text" id="id13" placeholder="<span class="s1">เลขบัตร</span> 13 <span class="s1">หลัก</span>" maxlength="13" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;button onclick="search()"&gt;<span class="s1">ค้นหา</span>&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div id="result" style="margin-top: 1em;"&gt;&lt;/div&gt;</p>
-<p class="p1">&lt;/body&gt;</p>
-<p class="p1">&lt;/html&gt;</p>
+  <h2>ค้นหาข้อมูลด้วยเลขบัตรประชาชน</h2>
+  <input type="text" id="id13" placeholder="เลขบัตร 13 หลัก" maxlength="13" />
+  <button onclick="search()">ค้นหา</button>
+  <div id="result" style="margin-top: 1em;"></div>
 </body>
 </html>
